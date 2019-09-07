@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+	<Libs Value=""/>
+	<Flags Value=""/>
+	<Target Value="DominoV2.exe"/>
+	<CommandLine Value=""/>
+	<CompilerOptions Value="-Wall -s"/>
+	<DeleteObjectsBefore Value="Yes"/>
+	<DeleteObjectsAfter Value="Yes"/>
+	<DeleteMakefileAfter Value="Yes"/>
+	<DeleteResourcesAfter Value="Yes"/>
+	<EnableTheme Value="No"/>
+	<RequiresAdmin Value="No"/>
+	<CompilerType Value="CPP"/>
+	<AppType Value="CONSOLE"/>
+	<Files>
+		<File Name="main.c"/>
+		<File Name="domino.c"/>
+		<File Name="domino.h"/>
+	</Files>
+</Project>
