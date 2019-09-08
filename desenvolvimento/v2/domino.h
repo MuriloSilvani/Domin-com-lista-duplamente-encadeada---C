@@ -19,4 +19,6 @@ DominoPiece *insertPiece(int *receivePieces, DominoPiece *receiveList, int left,
 
 DominoPiece *removePiece(int *givePieces, DominoPiece *giveList, int left, int right);
 
+DominoPiece *setTable(int playOption, int *givePieces, DominoPiece *giveParts, int *receivePieces, DominoPiece *receiveParts);
+
 #endif

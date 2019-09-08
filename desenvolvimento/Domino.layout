@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout>
 	<Files>
-		<File Name="main.c" Top="No" Tabpos="5" TopLine="1">
-			<Cursor Line="27" Column="2"/>
+		<File Name="main.c" Top="Yes" Tabpos="1" TopLine="1">
+			<Cursor Line="16" Column="2"/>
 		</File>
-		<File Name="domino.c" Top="No" Tabpos="6" TopLine="27">
+		<File Name="domino.c" Top="No" Tabpos="2" TopLine="27">
 			<Cursor Line="72" Column="3"/>
 			<Selection Line="1" Column="1"/>
 		</File>
-		<File Name="domino.h" Top="No" Tabpos="7" TopLine="1">
+		<File Name="domino.h" Top="No" Tabpos="3" TopLine="1">
 			<Cursor Line="1" Column="1"/>
 			<Selection Line="20" Column="1"/>
 		</File>

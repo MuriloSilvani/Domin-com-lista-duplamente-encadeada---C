@@ -39,17 +39,13 @@ DominoPiece *givePiece(int *givePieces, DominoPiece *giveParts, int *receivePiec
 	srand((unsigned)time(NULL));
 	int randomValue = rand() % *givePieces;
 	
-	
-	
-	if((randomValue+1) == *givePieces){
-		   printf("\nmaximo: %i  random: %i\n", *givePieces, randomValue);
-		   randomValue -= 1;
-	};
-	
 	for(int i = 0; i < randomValue; i++){
-		auxList = auxList->next;
 		left = auxList->values[0];
 		right = auxList->values[1];
+		if(auxList->next != NULL){
+			auxList = auxList->next;
+
+		};
 	};
 	
 	receiveParts = insertPiece(receivePieces, receiveParts, left, right);
@@ -153,4 +149,23 @@ DominoPiece *removePiece(int *givePieces, DominoPiece *giveList, int left, int r
 	al->next->prev = al->prev;
 	free(al);
 	return giveList;
-}
+};
+
+DominoPiece *setTable(int playOption, int *givePieces, DominoPiece *giveParts, int *receivePieces, DominoPiece *receiveParts){
+	DominoPiece *auxList = giveParts;
+	
+	int left, right;
+	
+	for(int i = 1; i <= playOption; i++){
+		left = auxList->values[0];
+		right = auxList->values[1];
+		if(auxList->next != NULL){
+			auxList = auxList->next;
+		};
+	};
+	
+	receiveParts = insertPiece(receivePieces, receiveParts, left, right);
+	giveParts = removePiece(givePieces, giveParts, left, right);
+	
+	return receiveParts;
+};
