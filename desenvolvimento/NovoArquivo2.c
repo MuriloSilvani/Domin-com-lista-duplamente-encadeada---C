@@ -14,7 +14,7 @@ DominoPiece *insertPiece(DominoPiece *l, int left, int right){
 	DominoPiece *newPiece = malloc(sizeof(DominoPiece));
 	newPiece->esq = left;
 	newPiece->dir = right;
-	
+
 	// Lista vazia
 	if(l == NULL){
 		newPiece->next = NULL;
@@ -24,14 +24,14 @@ DominoPiece *insertPiece(DominoPiece *l, int left, int right){
 
 	DominoPiece *last, *al = l;
 
-	
+
 	//while(al != NULL && al->value >= value){
 	while(al != NULL){
 		last = al;
 		al = al->next;
 	}
 
-	// Inserção no início
+	// Inserï¿½ï¿½o no inï¿½cio
 	if(al == l){
 		newPiece->next = l;
 		newPiece->prev = NULL;
@@ -39,7 +39,7 @@ DominoPiece *insertPiece(DominoPiece *l, int left, int right){
 		return newPiece;
 	}
 
-	// Inserção no final
+	// Inserï¿½ï¿½o no final
 	if(al == NULL){
 		newPiece->next = NULL;
 		newPiece->prev = last;
@@ -47,7 +47,7 @@ DominoPiece *insertPiece(DominoPiece *l, int left, int right){
 		return l;
 	}
 
-	//Inserção no meio
+	//Inserï¿½ï¿½o no meio
 	newPiece->next = al;
 	newPiece->prev = last;
 	al->prev = newPiece;
@@ -67,18 +67,18 @@ DominoPiece *deletePiece(DominoPiece *l, int left, int right){
 	printf("vai delatar [%i|%i]\n\n", left, right);
 	//while(al != NULL && al->value != value){
 	while(al != NULL && (al->esq != left && al->dir != right)){
-		
+
 		printf("nao deletou [%i|%i]\n", al->esq, al->dir);
-		al = al->next;	
+		al = al->next;
 	};
 
-	// Elemento não encontrado
+	// Elemento nï¿½o encontrado
 	if(al == NULL){
 		printf("deleta nao encontrado");
 		return l;
 	};
-		
-	// Elemento único
+
+	// Elemento ï¿½nico
 	if(al->next == NULL && al->prev == NULL){
 		printf("deleta elemento unico");
 		printf("\n\ndeletado [%i|%i]", al->esq, al->dir);
@@ -88,7 +88,7 @@ DominoPiece *deletePiece(DominoPiece *l, int left, int right){
 
 	DominoPiece *ret;
 
-	// Exclusão no início
+	// Exclusï¿½o no inï¿½cio
 	if(al->prev == NULL){
 		printf("deleta no inicio");
 		printf("\n\ndeletado [%i|%i]", al->esq, al->dir);
@@ -98,7 +98,7 @@ DominoPiece *deletePiece(DominoPiece *l, int left, int right){
 		return ret;
 	};
 
-	// Exclusão no final
+	// Exclusï¿½o no final
 	if(al->next == NULL){
 		printf("deleta no final");
 		printf("\n\ndeletado [%i|%i]", al->esq, al->dir);
@@ -107,7 +107,7 @@ DominoPiece *deletePiece(DominoPiece *l, int left, int right){
 		return l;
 	};
 
-	// Exclusão no meio
+	// Exclusï¿½o no meio
 	printf("deleta no meio");
 	printf("\n\ndeletado [%i|%i]", al->esq, al->dir);
 	al->prev->next = al->next;
@@ -147,7 +147,7 @@ int main(){
 	printf("\n");
 	print_list(l);
 	printf("\n");
-	
+
 	l = deletePiece(l, 6, 6);
 
 	printf("\n");

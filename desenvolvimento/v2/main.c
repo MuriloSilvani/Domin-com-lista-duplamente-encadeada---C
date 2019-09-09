@@ -7,6 +7,7 @@
 int main() {
 
 	// printf("\n\nJogo de domino\n\n\n");
+
 	
 		
 	int choose = 1;
@@ -46,7 +47,7 @@ int main() {
 		while(player2Pieces < 7){
 			player2Parts = givePiece(&deckPieces, deckParts, &player2Pieces, player2Parts);
 		};
-
+// 
 		// 
 		// int left;
 		// int right;		
@@ -80,13 +81,13 @@ int main() {
 		// 	
 			// system("pause");
 		// };
-
+// 
 			
 		int turnPlayer = 1;
 		while(player1Pieces > 0 || player2Pieces > 0){
 			int playOption = 0;
 			
-			system("cls");
+			// system("cls");
 			printf("-------Baralho [Total: %i] -------\n\n", deckPieces);
 			showPieces(deckParts);
 			printf("\n\n");
