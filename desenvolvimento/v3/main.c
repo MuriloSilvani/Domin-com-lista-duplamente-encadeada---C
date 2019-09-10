@@ -23,8 +23,12 @@ pecaDomino *darPecaAleatoria(int *contDar, pecaDomino *dar, int *contReceber, pe
 
 int main(){
 	
-	while(1==1){
-	
+	int x = 0;
+	while(x < 1000){
+		
+		system("cls");
+		
+	x++;
 	int contMonte = 0;
 	pecaDomino *monte = inicializarLista();
 	monte = gerarPecas(&contMonte, monte);
@@ -37,22 +41,22 @@ int main(){
 	
 	
 
-	for(int i = 0; i < 7; i++){
+	for(int i = 0; i < 28; i++){
 		jogador1 = darPecaAleatoria(&contMonte, monte, &contJogador1, jogador1);
 	};
-	for(int i = 0; i < 7; i++){
-		jogador2 = darPecaAleatoria(&contMonte, monte, &contJogador2, jogador2);
-	};
+	// for(int i = 0; i < 7; i++){
+	// 	jogador2 = darPecaAleatoria(&contMonte, monte, &contJogador2, jogador2);
+	// };
 	
 	
 
-		// system("cls");
-		printf("\nPecas do monte: [total: %i]\n", contMonte);
-		mostrarPecas(monte);
-		printf("\nPecas do Jogador 1: [total: %i]\n", contJogador1);
-		mostrarPecas(jogador1);	
-		printf("\nPecas do Jogador 2: [total: %i]\n", contJogador2);
-		mostrarPecas(jogador2);	
+		
+		// printf("\nPecas do monte: [total: %i]\n", contMonte);
+		// mostrarPecas(monte);
+		// printf("\nPecas do Jogador 1: [total: %i]\n", contJogador1);
+		// mostrarPecas(jogador1);	
+		// printf("\nPecas do Jogador 2: [total: %i]\n", contJogador2);
+		// mostrarPecas(jogador2);	
 		
 		
 	
@@ -78,7 +82,6 @@ pecaDomino *inicializarLista(){
 };
 
 pecaDomino *inserirPeca(int *aumentaContador, pecaDomino *listaQueRecebePeca, int valor1, int valor2){
-	printf("Status: INICIA INCERIR PECA\n");
 	pecaDomino *novaPeca = (pecaDomino*) malloc(sizeof(pecaDomino));
 	novaPeca->valores[0] = valor1;
 	novaPeca->valores[1] = valor2;
@@ -130,6 +133,7 @@ pecaDomino *gerarPecas(int *aumentaContador, pecaDomino *listaQueVaiReceberPecas
 			listaQueVaiReceberPecas = inserirPeca(aumentaContador, listaQueVaiReceberPecas, i, j);
 		};
 	};
+	printf("Status: TERMINA GERAR PECAS ------------------------------------\n");
 	return listaQueVaiReceberPecas;
 };
 
@@ -152,7 +156,7 @@ void mostrarPecas(pecaDomino *listaQueVaiSerMostrada){
 };
 
 pecaDomino *removerPeca(int *diminuiContador, pecaDomino *listaQueRemovePeca, int valor1, int valor2){
-	printf("Status: INICIA REMOVER PECA\n");
+	printf("Status: INICIA REMOVER PECA  devieria remover [%i|%i]\n", valor1, valor2);
 	pecaDomino *auxiliar = listaQueRemovePeca;
 	
 	*diminuiContador = *diminuiContador - 1;
@@ -206,20 +210,31 @@ pecaDomino *darPecaAleatoria(int *contDar, pecaDomino *dar, int *contReceber, pe
 	pecaDomino *auxList = dar;	
 	int valor1, valor2;
 	srand((unsigned)time(NULL));
-	int randomValue = rand() % (*contDar+1);
-	for(int i = 0; i <= randomValue; i++){
+	int randomValue = (rand() % *contDar)+1;
+	
+	
+	// printf("\nPecas do monte: [total: %i]\n", *contDar);
+	// mostrarPecas(dar);
+	// printf("\nPecas do Jogador 1: [total: %i]\n", *contReceber);
+	// mostrarPecas(receber);	
+	
+	
+	
+	printf("RANDOM: %i   max: %i ------------------------\n", randomValue, *contDar);
+	// scanf("%i",&randomValue);
+	
+	for(int i = 0; i < randomValue; i++){
 		valor1 = auxList->valores[0];
 		valor2 = auxList->valores[1];
 		if(auxList->proxima != NULL){
 			auxList = auxList->proxima;
 		}else{
-			if(auxList->anterior != NULL){
-				// auxList = NULL;	
-			}else{
-				// auxList = NULL;	
-			};
+			auxList = NULL;
 		};
 	};
+	
+
+	
 	
 	receber = inserirPeca( contReceber, receber, valor1, valor2);
 	dar = removerPeca( contDar, dar, valor1, valor2);
