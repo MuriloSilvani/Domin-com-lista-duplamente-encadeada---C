@@ -41,15 +41,25 @@ DominoPiece *givePiece(int *givePieces, DominoPiece *giveParts, int *receivePiec
 
 	int left, right;
 	srand((unsigned)time(NULL));
-	int randomValue = rand() % *givePieces;
+	int randomValue = rand() % (*givePieces+1);
 	printf("RANDOM: %i\n", randomValue);
-	for(int i = 0; i < randomValue; i++){
+	for(int i = 0; i <= randomValue; i++){
 		left = auxList->values[0];
 		right = auxList->values[1];
 		if(auxList->next != NULL){
 			auxList = auxList->next;
+		}else{
+			if(auxList->prev != NULL){
+				auxList = auxList->prev;
+			}else{
+				auxList = NULL;
+			};
 		};
 	};
+	
+	
+	
+	
 
 	receiveParts = insertPiece(receivePieces, receiveParts, left, right);
 	giveParts = removePiece(givePieces, giveParts, left, right);
