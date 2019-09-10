@@ -156,7 +156,7 @@ void mostrarPecas(pecaDomino *listaQueVaiSerMostrada){
 };
 
 pecaDomino *removerPeca(int *diminuiContador, pecaDomino *listaQueRemovePeca, int valor1, int valor2){
-	printf("Status: INICIA REMOVER PECA  devieria remover [%i|%i]\n", valor1, valor2);
+	printf("Status: INICIA REMOVER PECA     ||    devieria remover [%i|%i]\n", valor1, valor2);
 	pecaDomino *auxiliar = listaQueRemovePeca;
 	
 	*diminuiContador = *diminuiContador - 1;
@@ -218,8 +218,8 @@ pecaDomino *darPecaAleatoria(int *contDar, pecaDomino *dar, int *contReceber, pe
 	// printf("\nPecas do Jogador 1: [total: %i]\n", *contReceber);
 	// mostrarPecas(receber);	
 	
-	printf("Valor rand: ");
-	scanf("%i",&randomValue);
+	// printf("Valor rand: ");
+	// scanf("%i",&randomValue);
 	printf("RANDOM: %i   max: %i ------------------------\n", randomValue, *contDar);
 	
 	
