@@ -218,10 +218,10 @@ pecaDomino *darPecaAleatoria(int *contDar, pecaDomino *dar, int *contReceber, pe
 	// printf("\nPecas do Jogador 1: [total: %i]\n", *contReceber);
 	// mostrarPecas(receber);	
 	
-	
-	
+	printf("Valor rand: ");
+	scanf("%i",&randomValue);
 	printf("RANDOM: %i   max: %i ------------------------\n", randomValue, *contDar);
-	// scanf("%i",&randomValue);
+	
 	
 	for(int i = 0; i < randomValue; i++){
 		valor1 = auxList->valores[0];
