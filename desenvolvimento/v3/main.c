@@ -156,7 +156,7 @@ void mostrarPecas(pecaDomino *listaQueVaiSerMostrada){
 };
 
 pecaDomino *removerPeca(int *diminuiContador, pecaDomino *listaQueRemovePeca, int valor1, int valor2){
-	printf("Status: INICIA REMOVER PECA     ||    devieria remover [%i|%i]\n", valor1, valor2);
+	printf("Status: INICIA REMOVER PECA  devieria remover [%i|%i]\n", valor1, valor2);
 	pecaDomino *auxiliar = listaQueRemovePeca;
 	
 	*diminuiContador = *diminuiContador - 1;
@@ -209,8 +209,21 @@ pecaDomino *removerPeca(int *diminuiContador, pecaDomino *listaQueRemovePeca, in
 pecaDomino *darPecaAleatoria(int *contDar, pecaDomino *dar, int *contReceber, pecaDomino *receber){
 	pecaDomino *auxList = dar;	
 	int valor1, valor2;
-	srand((unsigned)time(NULL));
-	int randomValue = (rand() % *contDar)+1;
+
+	
+		
+	// while(auxList != NULL){
+		srand((unsigned)time(NULL));
+		int randomValue = (rand() % *contDar)+1;
+		for(int i = 0; i < randomValue; i++){
+			valor1 = auxList->valores[0];
+			valor2 = auxList->valores[1];
+			
+			auxList = auxList->proxima;
+
+		};
+	// };
+	printf("DEVERIA REMOVER [%i|%i]    RAND: %i   \n", valor1, valor2, randomValue);
 	
 	
 	// printf("\nPecas do monte: [total: %i]\n", *contDar);
@@ -220,20 +233,7 @@ pecaDomino *darPecaAleatoria(int *contDar, pecaDomino *dar, int *contReceber, pe
 	
 	// printf("Valor rand: ");
 	// scanf("%i",&randomValue);
-	printf("RANDOM: %i   max: %i ------------------------\n", randomValue, *contDar);
-	
-	
-	for(int i = 0; i < randomValue; i++){
-		valor1 = auxList->valores[0];
-		valor2 = auxList->valores[1];
-		if(auxList->proxima != NULL){
-			auxList = auxList->proxima;
-		}else{
-			auxList = NULL;
-		};
-	};
-	
-
+	// printf("RANDOM: %i   max: %i ------------------------\n", randomValue, *contDar);
 	
 	
 	receber = inserirPeca( contReceber, receber, valor1, valor2);
