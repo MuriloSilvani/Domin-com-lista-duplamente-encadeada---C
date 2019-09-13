@@ -31,7 +31,7 @@ int main(){
 	}else{
 		strcpy(name2,"Computador");
 	};
-	system("cls");
+	printf("\e[H\e[2J");
 	char auxName[6];
 
 	dominoParts *allParts = (dominoParts*) malloc(sizeof (dominoParts));

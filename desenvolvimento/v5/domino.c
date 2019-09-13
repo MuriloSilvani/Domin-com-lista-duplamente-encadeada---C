@@ -130,7 +130,7 @@ void insertPieceStart(dominoParts *parts, int left, int right){
 int play(dominoParts *player, dominoParts *table, dominoParts *allParts){
 	int playChoose = 0;
 	while((playChoose < 1 || playChoose > player->total)){
-		system("cls");
+		printf("\e[H\e[2J");
 		
 		showParts(table);
 		showParts(player);
