@@ -3,12 +3,12 @@
 
 typedef struct dominoPiece{
 	int values[2];
-	dominoPiece *next, *prev;
+	struct dominoPiece *next, *prev;
 }dominoPiece;
 
 typedef struct dominoParts{
 	int total;
-	dominoPiece *startPiece;
+	struct dominoPiece *startPiece;
 	char name[50];
 }dominoParts;
 
@@ -22,7 +22,7 @@ void giveStartParts(dominoParts *giveParts, dominoParts *receiveParts);
 void insertPieceStart(dominoParts *parts, int left, int right);
 
 void searchFirstLast(dominoParts *table, int *first, int *last);
-bool verifyPiece(dominoParts *player, dominoParts *table, int playChoose);
+int verifyPiece(dominoParts *player, dominoParts *table, int playChoose);
 
 
 // jogar
@@ -32,7 +32,7 @@ bool verifyPiece(dominoParts *player, dominoParts *table, int playChoose);
 // versetemganhador
 
 
-bool play(dominoParts *player, dominoParts *table, dominoParts *allParts);
+int play(dominoParts *player, dominoParts *table, dominoParts *allParts);
 void playPiece(dominoParts *player, dominoParts *table, int playChoose);
 
 

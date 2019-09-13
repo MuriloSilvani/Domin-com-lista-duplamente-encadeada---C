@@ -127,7 +127,7 @@ void insertPieceStart(dominoParts *parts, int left, int right){
     parts->total += 1;
 };
 
-bool play(dominoParts *player, dominoParts *table, dominoParts *allParts){
+int play(dominoParts *player, dominoParts *table, dominoParts *allParts){
 	int playChoose = 0;
 	while((playChoose < 1 || playChoose > player->total)){
 		system("cls");
@@ -240,7 +240,7 @@ void playPiece(dominoParts *player, dominoParts *table, int playChoose){
 	};
 };
 
-bool verifyPiece(dominoParts *player, dominoParts *table, int playChoose){
+int verifyPiece(dominoParts *player, dominoParts *table, int playChoose){
 	if(table->startPiece == NULL){
 		return 1;
 	}else{
