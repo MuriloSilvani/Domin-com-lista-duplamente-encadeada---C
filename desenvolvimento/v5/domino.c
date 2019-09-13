@@ -41,7 +41,7 @@ void removePiece(dominoParts *parts, int left, int right){
         last = last->next;
     };
     if(last == NULL){
-        printf("Peça não encontrada!");
+        printf("Peca nao encontrada!");
         system("PAUSE");
     }else{
         if(last->prev == NULL && last->next == NULL){
