@@ -42,7 +42,7 @@ void removePiece(dominoParts *parts, int left, int right){
     };
     if(last == NULL){
         printf("Peca nao encontrada!");
-        system("PAUSE");
+        printf("Aplicacao pausada, presione qualquer tecla...");getchar();
     }else{
         if(last->prev == NULL && last->next == NULL){
             parts->startPiece = NULL;
@@ -142,10 +142,10 @@ int play(dominoParts *player, dominoParts *table, dominoParts *allParts){
 			playPiece(player, table, playChoose);
 			
 			printf("ja devia ter jogado\n\n");
-			system("pause");
+			printf("Aplicacao pausada, presione qualquer tecla...");getchar();
 		}else{
 			printf("Tente outra peca...\n");
-			system("pause");
+			printf("Aplicacao pausada, presione qualquer tecla...");getchar();
 			playChoose = 0;
 		};
 		
