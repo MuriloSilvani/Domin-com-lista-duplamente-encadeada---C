@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <windows.h>
 #include "domino.h"
 
 void init(dominoParts *parts, char name[50]){
@@ -113,6 +112,13 @@ void giveRandomPiece(dominoParts *giveParts, dominoParts *receiveParts){
 	removePiece(giveParts, left, right);
 };
 
+
+
+
+
+
+
+
 int checkWinner(dominoParts *player, dominoParts *table){
 	if(player->startPiece == NULL){
 		system("cls");
@@ -137,13 +143,26 @@ void pickFirstLast(int *firstTable, int *lastTable, dominoParts *table){
 	};
 };
 
-int play(dominoParts *player, dominoParts *table){
+int play(dominoParts *player, dominoParts *table, dominoParts *allParts){
 	int choosePiece = 0;
-	while(choosePiece < 1 || choosePiece > player->total){
-		printf("Escolha uma peca [1 - %i]\n", player->total);
-		scanf("%i", &choosePiece);
-		if(choosePiece < 1 || choosePiece > player->total){
-			printf("\nEscolha uma peca valida...\n");	
+	while((choosePiece < 1 || choosePiece > player->total) && needPiece(player, table) != 1){
+		showParts(player);
+		printf("\n");
+		int auxNeedPiece = needPiece(player, table);
+		if(auxNeedPiece == 1){
+			printf("Voce precisa pescar uma peca\n");
+			system("pause");
+			printf("Pescando....\t");
+			giveRandomPiece(allParts, player);
+			system("pause");
+		}else{
+			printf("Escolha uma peca [de 1 a %i]\t %i Para pescar\n", player->total, ((player->total) + 1));
+			scanf("%i", &choosePiece);
+			if((choosePiece < 1 || choosePiece > player->total) || checkPiece(choosePiece, player, table) != 1){
+				printf("\nEscolha uma peca valida...\t\n");
+				system("pause");
+				choosePiece = 0;
+			};
 		};
 	};
 	dominoPiece *auxList = player->startPiece;	
@@ -169,12 +188,12 @@ int play(dominoParts *player, dominoParts *table){
 			
 			if(chooseSide == 1){
 				if(left == firstTable){
-					table = insertPieceStart(table, left, right);
+					insertPieceStart(table, right, left);
 					removePiece(player, left, right);
 					return 1;
 				};	
 				if(right == firstTable){
-					table = insertPieceStart(table, right, left);
+					insertPieceStart(table, left, right);
 					removePiece(player, left, right);
 					return 1;
 				};
@@ -193,12 +212,12 @@ int play(dominoParts *player, dominoParts *table){
 			};
 		}else{
 			if(left == firstTable){
-				table = insertPieceStart(table, right, left);
+				insertPieceStart(table, right, left);
 				removePiece(player, left, right);
 				return 1;
 			};
 			if(right == firstTable){
-				table = insertPieceStart(table, left, right);
+				insertPieceStart(table, left, right);
 				removePiece(player, left, right);
 				return 1;
 			};
@@ -206,7 +225,7 @@ int play(dominoParts *player, dominoParts *table){
 				insertPiece(table, left, right);
 				removePiece(player, left, right);
 				return 1;
-			};	
+			};
 			if(right == lastTable){
 				insertPiece(table, right, left);
 				removePiece(player, left, right);
@@ -221,24 +240,58 @@ int play(dominoParts *player, dominoParts *table){
 	return 2;
 };
 
-dominoPiece *insertPieceStart(dominoParts *parts, int left, int right){
+void insertPieceStart(dominoParts *parts, int left, int right){
+    dominoPiece *newPiece;
+    newPiece = (dominoPiece*)malloc(sizeof(dominoPiece));
+    newPiece->values[0] = left;
+    newPiece->values[1] = right;
+    newPiece->prev = NULL;
+    newPiece->next = parts->startPiece;
 
-	// dominoPiece *newPiece = (dominoPiece*) malloc(sizeof(dominoPiece));
-	// newPiece->values[0] = left;
-	// 
-	// newPiece->next = parts->startPiece;
-	// newPiece->prev = NULL;
-	// parts->startPiece->prev = newPiece;
-	// 	
-	// 
- //    parts->total += 1;
- //    
- //    return newPiece;
-    
-    return parts->startPiece;
-    
+    parts->startPiece = newPiece;
+
+    parts->total += 1;
 };
 
+int needPiece(dominoParts *player, dominoParts *table){
+	if(table->startPiece != NULL){
+		int firstPiece, lastPiece;
+		pickFirstLast(&firstPiece, &lastPiece, table);
+		
+	    dominoPiece *last = player->startPiece;
+	    while(last != NULL){
+	        if(firstPiece == last->values[0] || firstPiece == last->values[1] || lastPiece == last->values[0] || lastPiece == last->values[1]){
+				return 0;
+			};
+	        last = last->next;
+	    };
+	    return 1;
+  	}else{
+		return 0;
+	};
+	return 1;
+};
 
-
-
+int checkPiece(int choosePiece, dominoParts *player, dominoParts *table){
+	printf("verifica peca\n\n");
+	system("pause");
+	if(table->startPiece == NULL){
+		return 1;
+	};
+	dominoPiece *auxList = player->startPiece;	
+	int left = auxList->values[0], right = auxList->values[1];
+	int i = 1;
+	while(i < choosePiece){
+		auxList = auxList->next;
+		left = auxList->values[0];
+		right = auxList->values[1];
+		i++;
+	};
+	int firstPiece, lastPiece;
+	pickFirstLast(&firstPiece, &lastPiece, table);
+	if(firstPiece == auxList->values[0] || firstPiece == auxList->values[1] || lastPiece == auxList->values[0] || lastPiece == auxList->values[1]){
+		return 1;
+	}else{
+		return 0;
+	};
+};

@@ -2,7 +2,7 @@
 <Project>
 	<Libs Value=""/>
 	<Flags Value=""/>
-	<Target Value="Domino V4.exe"/>
+	<Target Value="Domino V5.exe"/>
 	<CommandLine Value=""/>
 	<CompilerOptions Value="-Wall -s"/>
 	<DeleteObjectsBefore Value="Yes"/>
@@ -17,7 +17,7 @@
 		<File Name="main.c"/>
 		<File Name="domino.c"/>
 		<File Name="domino.h"/>
-		<File Name="pecas.c"/>
-		<File Name="tabuleiro.c"/>
+		<File Name="jogar.c"/>
+		<File Name="jogar.h"/>
 	</Files>
 </Project>

@@ -1,7 +1,10 @@
 CPP    = g++
 RM     = rm -f
 OBJS   = main.o \
-         domino.o
+         domino.o \
+         pecas.o \
+         tabuleiro.o \
+         NovoArquivo.o
 
 LIBS   =
 CFLAGS =
@@ -23,5 +26,14 @@ main.o: main.c domino.h
 	$(CPP) -Wall -s -c $< -o $@ $(CFLAGS)
 
 domino.o: domino.c domino.h
+	$(CPP) -Wall -s -c $< -o $@ $(CFLAGS)
+
+pecas.o: pecas.c
+	$(CPP) -Wall -s -c $< -o $@ $(CFLAGS)
+
+tabuleiro.o: tabuleiro.c
+	$(CPP) -Wall -s -c $< -o $@ $(CFLAGS)
+
+NovoArquivo.o: NovoArquivo.cpp
 	$(CPP) -Wall -s -c $< -o $@ $(CFLAGS)
 
