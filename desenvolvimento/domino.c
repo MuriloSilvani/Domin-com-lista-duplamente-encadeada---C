@@ -12,8 +12,9 @@ void init(dominoParts *parts, char name[50], int type){
 };
 
 void generateAllParts(dominoParts *parts){
-	for(int i = 0; i <= 6; i++){
-		for(int j = 0; j <= i; j++){
+	int i, j;
+	for(i = 0; i <= 6; i++){
+		for(j = 0; j <= i; j++){
 			insertPiece(parts, i, j);
 			giveRandomPiece(parts, parts);
 		};
@@ -24,7 +25,7 @@ void showParts(dominoParts *parts){
     dominoPiece *showParts = parts->startPiece;
 
 	printf("---------- VEZ DE: %s [%i pecas] ----------\n\n", parts->name, parts->total);
-	
+
     if(showParts == NULL){
 		printf("Sem pecas!");
 	}else{
@@ -52,7 +53,7 @@ void removePiece(dominoParts *parts, int left, int right){
         }else{
             if(last->prev == NULL){
                 parts->startPiece = last->next;
-                last->next->prev = NULL;   
+                last->next->prev = NULL;
             }else{
                 if(last->next == NULL){
                     last->prev->next = NULL;
@@ -61,7 +62,7 @@ void removePiece(dominoParts *parts, int left, int right){
                 };
             };
             if(last->next == NULL){
-                last->prev->next = NULL;   
+                last->prev->next = NULL;
             }else{
                 if(last->prev == NULL){
                     last->next->prev = NULL;
@@ -83,7 +84,7 @@ void giveStartParts(dominoParts *giveParts, dominoParts *receiveParts){
 
 void giveRandomPiece(dominoParts *giveParts, dominoParts *receiveParts){
 	if(giveParts->startPiece != NULL){
-		dominoPiece *auxList = giveParts->startPiece;	
+		dominoPiece *auxList = giveParts->startPiece;
 		srand((unsigned)time(NULL));
 		int randomValue = (rand() % giveParts->total);
 		int left = auxList->values[0], right = auxList->values[1];
@@ -143,7 +144,7 @@ int play(dominoParts *player, dominoParts *table, dominoParts *allParts){
 		printf("\e[H\e[2J");
 		showTable(table);
 		showParts(player);
-		
+
 		if(verifyParts(player, table) == 1){
 			if(player->type == 1){
 				printf("Escolha uma peca [de 1 a %i]  ", player->total);
@@ -176,7 +177,7 @@ int play(dominoParts *player, dominoParts *table, dominoParts *allParts){
 			printf("Peca Invalidade, tente outra...\n");
 			playChoose = 0;
 		};
-		
+
 		if(player->startPiece == NULL){
 			return 1;
 		};
@@ -213,7 +214,7 @@ void playPiece(dominoParts *player, dominoParts *table, int playChoose){
 				}else{
 					chooseSide = 2;
 				};
-				
+
 				if(chooseSide == 1){
 					if(left == first){
 						insertPieceStart(table, right, left);
@@ -247,7 +248,7 @@ void playPiece(dominoParts *player, dominoParts *table, int playChoose){
 					removePiece(player, left, right);
 				};
 			};
-		};	
+		};
 	}else{
 		insertPiece(table, left, right);
 		removePiece(player, left, right);
@@ -260,7 +261,7 @@ int verifyPiece(dominoParts *player, dominoParts *table, int playChoose){
 	}else{
 		int first = 0, last = 0;
 		searchFirstLast(table, &first, &last);
-		
+
 		dominoPiece *auxPiece = player->startPiece;
 		int auxNum = 1;
 		while(auxNum < playChoose){
@@ -306,7 +307,7 @@ int verifyParts(dominoParts *player, dominoParts *table){
 	}else{
 		int first, last;
 		searchFirstLast(table, &first, &last);
-		
+
 		dominoPiece *auxList = player->startPiece;
 		if(auxList->values[0] == first || auxList->values[1] == first || auxList->values[0] == last || auxList->values[1] == last){
 			return 1;
@@ -354,13 +355,14 @@ int verifyWinner(dominoParts *player1, dominoParts *player2, dominoParts *table,
 };
 
 void drawnH(char board[45][113], int *nextY, int *nextX, int left, int right){
-	for(int i = *nextX; i < (*nextX+5); i++){
-		for(int j = *nextY; j < (*nextY+17); j++){
+	int i, j;
+	for(i = *nextX; i < (*nextX+5); i++){
+		for(j = *nextY; j < (*nextY+17); j++){
 			if((i == *nextX && j != *nextY && j != (*nextY+16)) || (i == *nextX+4 && j != *nextY && j != (*nextY+16))){
-				board[i][j] = '-';	
+				board[i][j] = '-';
 			};
 			if((j == *nextY && i != *nextX && i != (*nextX+4)) || (j == *nextY+16 && i != *nextX && i != (*nextX+4)) || (j == (*nextY+8) && i != *nextX && i != (*nextX+4))){
-				board[i][j] = '|';	
+				board[i][j] = '|';
 			};
 		};
 	};
@@ -433,13 +435,14 @@ void drawnH(char board[45][113], int *nextY, int *nextX, int left, int right){
 };
 
 void drawnV(char board[45][113], int *nextY, int *nextX, int left, int right){
-	for(int i = *nextX; i < (*nextX+9); i++){
-		for(int j = *nextY; j < (*nextY+9); j++){
+	int i, j;
+	for(i = *nextX; i < (*nextX+9); i++){
+		for(j = *nextY; j < (*nextY+9); j++){
 			if((i == *nextX && j != *nextY && j != (*nextY+8)) || (i == *nextX+4 && j != *nextY && j != (*nextY+8)) || (i == *nextX+8 && j != *nextY && j != (*nextY+8))){
-				board[i][j] = '-';	
+				board[i][j] = '-';
 			};
 			if((j == *nextY && i != *nextX && i != (*nextX+8)) || (j == *nextY+8 && i != *nextX && i != (*nextX+8))){
-				board[i][j] = '|';	
+				board[i][j] = '|';
 			};
 		};
 	};
@@ -512,8 +515,8 @@ void drawnV(char board[45][113], int *nextY, int *nextX, int left, int right){
 };
 
 void drawnPiece(char board[45][113], int *nextX, int *nextY, int left, int right){
-	
-	
+
+
 	if(
 		((*nextX == 1) && ( *nextY == 10)) ||
 		((*nextX == 1) && ( *nextY == 28))
@@ -545,7 +548,7 @@ void drawnPiece(char board[45][113], int *nextX, int *nextY, int left, int right
 		*nextX = *nextX - 9;
 		return;
 	};
-	
+
 	if(
 		((*nextX == 95) && ( *nextY == 10)) ||
 		((*nextX == 78) && ( *nextY == 10)) ||
@@ -562,7 +565,7 @@ void drawnPiece(char board[45][113], int *nextX, int *nextY, int left, int right
 		*nextX = *nextX - 17;
 		return;
 	};
-	
+
 	if(
 		((*nextX == 1) && ( *nextY == 1)) ||
 		((*nextX == 18) && ( *nextY == 1)) ||
@@ -586,8 +589,9 @@ void drawnPiece(char board[45][113], int *nextX, int *nextY, int left, int right
 void showTable(dominoParts *table){
 	printf("\e[H\e[2J");
 	char board[45][113];
-	for(int i = 0; i < 45; i++){
-		for(int j = 0; j < 113; j++){
+	int i, j;
+	for(i = 0; i < 45; i++){
+		for(j = 0; j < 113; j++){
 			if((i == 0 && j != 0 && j != 113-1) || (i == 45-1 && j != 0 && j != 113-1)){
 				board[i][j] = '-';
 			}else if((j == 0 && i != 0 && i != 45-1) || (j == 113-1 && i != 0 && i != 45-1)){
@@ -595,7 +599,7 @@ void showTable(dominoParts *table){
 			}else{
 				board[i][j] = ' ';
 			};
-		};		
+		};
 	};
 	board[0][47] = 'T';
 	board[0][48] = 'A';
@@ -613,10 +617,11 @@ void showTable(dominoParts *table){
 		drawnPiece(board, &nextX, &nextY, auxPiece->values[0], auxPiece->values[1]);
 		auxPiece = auxPiece->next;
 	};
-	for(int i = 0; i < 45; i++){
-		for(int j = 0; j < 113; j++){
+	int i, j;
+	for(i = 0; i < 45; i++){
+		for(j = 0; j < 113; j++){
 			printf("%c", board[i][j]);
 		};
 		printf("\n");
-	};	
+	};
 };
