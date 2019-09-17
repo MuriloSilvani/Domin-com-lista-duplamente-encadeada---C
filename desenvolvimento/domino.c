@@ -617,7 +617,6 @@ void showTable(dominoParts *table){
 		drawnPiece(board, &nextX, &nextY, auxPiece->values[0], auxPiece->values[1]);
 		auxPiece = auxPiece->next;
 	};
-	int i, j;
 	for(i = 0; i < 45; i++){
 		for(j = 0; j < 113; j++){
 			printf("%c", board[i][j]);
