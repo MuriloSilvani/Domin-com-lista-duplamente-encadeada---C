@@ -10,7 +10,7 @@ typedef struct dominoParts{
 	int total;
 	struct dominoPiece *startPiece;
 	char name[50];
-	int type;// 0 - maquina // 1 - jogador
+	int type;
 }dominoParts;
 
 void init(dominoParts *parts, char name[50], int type);
@@ -28,5 +28,11 @@ void playAuto(dominoParts *player, dominoParts *table, int *playChoose);
 int play(dominoParts *player, dominoParts *table, dominoParts *allParts);
 void playPiece(dominoParts *player, dominoParts *table, int playChoose);
 int verifyWinner(dominoParts *player1, dominoParts *player2, dominoParts *table, dominoParts *allParts);
+
+void drawnV(char board[45][113], int *nextY, int *nextX, int left, int right);
+void drawnH(char board[45][113], int *nextY, int *nextX, int left, int right);
+void drawnPiece(char board[45][113], int *nextX, int *nextY, int left, int right);
+void showTable(dominoParts *table);
+
 
 #endif
