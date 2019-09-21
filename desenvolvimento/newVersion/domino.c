@@ -138,11 +138,12 @@ void insertPieceStart(dominoParts *parts, int left, int right){
     parts->total += 1;
 };
 
-int play(dominoParts *player, dominoParts *table, dominoParts *allParts){
+int play(dominoParts *player, dominoParts *table, dominoParts *allParts, char board[43][163]){
 	int playChoose = 0;
 	while((playChoose < 1 || playChoose > player->total)){
 		printf("\e[H\e[2J");
-		showTable(table, player);
+		// showTable(table, board);
+		drawnPlayerParts(board, player);
 		showParts(player);
 
 		if(verifyParts(player, table) == 1){
@@ -323,13 +324,16 @@ int verifyParts(dominoParts *player, dominoParts *table){
 	return 0;
 };
 
-int verifyWinner(dominoParts *player1, dominoParts *player2, dominoParts *table, dominoParts *allParts){
+int verifyWinner(dominoParts *player1, dominoParts *player2, dominoParts *table, dominoParts *allParts, char board[43][163]){
+	printf("\e[H\e[2J");
 	if(player1->startPiece == NULL){
-		printf("\n----- GANHADOR: %s\n", player1->name);
+		// printf("\n----- GANHADOR: %s\n", player1->name);
+		showTable(board);
 		return 1;
 	};
 	if(player2->startPiece == NULL){
-		printf("\n----- GANHADOR: %s\n", player2->name);
+		// printf("\n----- GANHADOR: %s\n", player2->name);
+		showTable(board);
 		return 1;
 	};
 	if(allParts->startPiece != NULL){
@@ -337,13 +341,16 @@ int verifyWinner(dominoParts *player1, dominoParts *player2, dominoParts *table,
 	}else{
 		if((verifyParts(player1, table) == 0) && (verifyParts(player2, table) == 0)){
 			if(player1->total == player2->total){
-				printf("\n----- EMPATE\n");
+				// printf("\n----- EMPATE\n");
+				showTable(board);
 			};
 			if(player1->total < player2->total){
-				printf("\n----- GANHADOR: %s\n", player1->name);
+				// printf("\n----- GANHADOR: %s\n", player1->name);
+				showTable(board);
 			};
 			if(player2->total < player1->total){
-				printf("\n----- GANHADOR: %s\n", player2->name);
+				// printf("\n----- GANHADOR: %s\n", player2->name);
+				showTable(board);
 			};
 			return 1;
 		}else{
@@ -354,180 +361,22 @@ int verifyWinner(dominoParts *player1, dominoParts *player2, dominoParts *table,
 	return 0;
 };
 
-void drawnH(char board[45][164], int *nextY, int *nextX, int left, int right){
-	int i, j;
-	for(i = *nextX; i < (*nextX+5); i++){
-		for(j = *nextY; j < (*nextY+17); j++){
-			if((i == *nextX && j != *nextY && j != (*nextY+16)) || (i == *nextX+4 && j != *nextY && j != (*nextY+16))){
-				board[i][j] = '-';
-			};
-			if((j == *nextY && i != *nextX && i != (*nextX+4)) || (j == *nextY+16 && i != *nextX && i != (*nextX+4)) || (j == (*nextY+8) && i != *nextX && i != (*nextX+4))){
-				board[i][j] = '|';
-			};
-		};
-	};
-	if(left == 1){
-		board[*nextX+2][*nextY+4] = '0';
-	};
-	if(left == 2){
-		board[*nextX+1][*nextY+4] = '0';
-		board[*nextX+3][*nextY+4] = '0';
-	};
-	if(left == 3){
-		board[*nextX+1][*nextY+2] = '0';
-		board[*nextX+2][*nextY+4] = '0';
-		board[*nextX+3][*nextY+6] = '0';
-	};
-	if(left == 4){
-		board[*nextX+1][*nextY+2] = '0';
-		board[*nextX+1][*nextY+6] = '0';
-		board[*nextX+3][*nextY+2] = '0';
-		board[*nextX+3][*nextY+6] = '0';
-	};
-	if(left == 5){
-		board[*nextX+1][*nextY+2] = '0';
-		board[*nextX+1][*nextY+6] = '0';
-		board[*nextX+3][*nextY+2] = '0';
-		board[*nextX+3][*nextY+6] = '0';
-		board[*nextX+2][*nextY+4] = '0';
-	};
-	if(left == 6){
-		board[*nextX+1][*nextY+2] = '0';
-		board[*nextX+1][*nextY+4] = '0';
-		board[*nextX+1][*nextY+6] = '0';
-		board[*nextX+3][*nextY+2] = '0';
-		board[*nextX+3][*nextY+4] = '0';
-		board[*nextX+3][*nextY+6] = '0';
-	};
-	if(right == 1){
-		board[*nextX+2][*nextY+12] = '0';
-	};
-	if(right == 2){
-		board[*nextX+1][*nextY+12] = '0';
-		board[*nextX+3][*nextY+12] = '0';
-	};
-	if(right == 3){
-		board[*nextX+1][*nextY+10] = '0';
-		board[*nextX+2][*nextY+12] = '0';
-		board[*nextX+3][*nextY+14] = '0';
-	};
-	if(right == 4){
-		board[*nextX+1][*nextY+10] = '0';
-		board[*nextX+1][*nextY+14] = '0';
-		board[*nextX+3][*nextY+10] = '0';
-		board[*nextX+3][*nextY+14] = '0';
-	};
-	if(right == 5){
-		board[*nextX+1][*nextY+10] = '0';
-		board[*nextX+1][*nextY+14] = '0';
-		board[*nextX+3][*nextY+10] = '0';
-		board[*nextX+3][*nextY+14] = '0';
-		board[*nextX+2][*nextY+12] = '0';
-	};
-	if(right == 6){
-		board[*nextX+1][*nextY+10] = '0';
-		board[*nextX+1][*nextY+12] = '0';
-		board[*nextX+1][*nextY+14] = '0';
-		board[*nextX+3][*nextY+10] = '0';
-		board[*nextX+3][*nextY+12] = '0';
-		board[*nextX+3][*nextY+14] = '0';
-	};
-};
+void drawnPiece(char board[43][163], int *nextX, int *nextY, int left, int right){
 
-void drawnV(char board[45][164], int *nextY, int *nextX, int left, int right){
-	int i, j;
-	for(i = *nextX; i < (*nextX+9); i++){
-		for(j = *nextY; j < (*nextY+9); j++){
-			if((i == *nextX && j != *nextY && j != (*nextY+8)) || (i == *nextX+4 && j != *nextY && j != (*nextY+8)) || (i == *nextX+8 && j != *nextY && j != (*nextY+8))){
-				board[i][j] = '-';
-			};
-			if((j == *nextY && i != *nextX && i != (*nextX+8)) || (j == *nextY+8 && i != *nextX && i != (*nextX+8))){
-				board[i][j] = '|';
-			};
-		};
-	};
-	if(left == 1){
-		board[*nextX+2][*nextY+4] = '0';
-	};
-	if(left == 2){
-		board[*nextX+2][*nextY+2] = '0';
-		board[*nextX+2][*nextY+6] = '0';
-	};
-	if(left == 3){
-		board[*nextX+3][*nextY+2] = '0';
-		board[*nextX+2][*nextY+4] = '0';
-		board[*nextX+1][*nextY+6] = '0';
-	};
-	if(left == 4){
-		board[*nextX+3][*nextY+2] = '0';
-		board[*nextX+1][*nextY+6] = '0';
-		board[*nextX+1][*nextY+2] = '0';
-		board[*nextX+3][*nextY+6] = '0';
-	};
-	if(left == 5){
-		board[*nextX+3][*nextY+2] = '0';
-		board[*nextX+1][*nextY+6] = '0';
-		board[*nextX+1][*nextY+2] = '0';
-		board[*nextX+3][*nextY+6] = '0';
-		board[*nextX+2][*nextY+4] = '0';
-	};
-	if(left == 6){
-		board[*nextX+3][*nextY+2] = '0';
-		board[*nextX+1][*nextY+6] = '0';
-		board[*nextX+1][*nextY+2] = '0';
-		board[*nextX+3][*nextY+6] = '0';
-		board[*nextX+2][*nextY+2] = '0';
-		board[*nextX+2][*nextY+6] = '0';
-	};
-	if(right == 1){
-		board[*nextX+6][*nextY+4] = '0';
-	};
-	if(right == 2){
-		board[*nextX+6][*nextY+2] = '0';
-		board[*nextX+6][*nextY+6] = '0';
-	};
-	if(right == 3){
-		board[*nextX+7][*nextY+2] = '0';
-		board[*nextX+6][*nextY+4] = '0';
-		board[*nextX+5][*nextY+6] = '0';
-	};
-	if(right == 4){
-		board[*nextX+7][*nextY+2] = '0';
-		board[*nextX+5][*nextY+6] = '0';
-		board[*nextX+5][*nextY+2] = '0';
-		board[*nextX+7][*nextY+6] = '0';
-	};
-	if(right == 5){
-		board[*nextX+7][*nextY+2] = '0';
-		board[*nextX+5][*nextY+6] = '0';
-		board[*nextX+5][*nextY+2] = '0';
-		board[*nextX+7][*nextY+6] = '0';
-		board[*nextX+6][*nextY+4] = '0';
-	};
-	if(right == 6){
-		board[*nextX+7][*nextY+2] = '0';
-		board[*nextX+5][*nextY+6] = '0';
-		board[*nextX+5][*nextY+2] = '0';
-		board[*nextX+7][*nextY+6] = '0';
-		board[*nextX+6][*nextY+2] = '0';
-		board[*nextX+6][*nextY+6] = '0';
-	};
-};
 
-void drawnPiece(char board[45][164], int *nextX, int *nextY, int left, int right){
 	if(
 		((*nextX == 1) && ( *nextY == 10)) ||
 		((*nextX == 1) && ( *nextY == 28))
 	){
-		drawnV(board, nextX, nextY, left, right);
+		drawnV(board, *nextX, *nextY, left, right);
 		*nextY = *nextY + 9;
 		return;
 	};
 	if(
-		((*nextX == 154) && ( *nextY == 1)) ||
-		((*nextX == 154) && ( *nextY == 19))
+		((*nextX == 103) && ( *nextY == 1)) ||
+		((*nextX == 103) && ( *nextY == 19))
 	){
-		drawnV(board, nextX, nextY, left, right);
+		drawnV(board, *nextX, *nextY, left, right);
 		*nextX = *nextX - 8;
 		*nextY = *nextY + 9;
 		return;
@@ -535,39 +384,35 @@ void drawnPiece(char board[45][164], int *nextX, int *nextY, int left, int right
 	if(
 		((*nextX == 10) && ( *nextY == 28))
 	){
-		drawnH(board, nextX, nextY, right, left);
+		drawnH(board, *nextX, *nextY, right, left);
 		*nextX = *nextX - 9;
 		return;
 	};
 	if(
 		((*nextX == 10) && ( *nextY == 10))
 	){
-		drawnH(board, nextX, nextY, left, right);
+		drawnH(board, *nextX, *nextY, left, right);
 		*nextX = *nextX - 9;
 		return;
 	};
+
 	if(
-		((*nextX == 146) && ( *nextY == 10)) ||
-		((*nextX == 129) && ( *nextY == 10)) ||
-		((*nextX == 112) && ( *nextY == 10)) ||
 		((*nextX == 95) && ( *nextY == 10)) ||
 		((*nextX == 78) && ( *nextY == 10)) ||
 		((*nextX == 61) && ( *nextY == 10)) ||
 		((*nextX == 44) && ( *nextY == 10)) ||
 		((*nextX == 27) && ( *nextY == 10)) ||
-		((*nextX == 146) && ( *nextY == 28)) ||
-		((*nextX == 129) && ( *nextY == 28)) ||
-		((*nextX == 112) && ( *nextY == 28)) ||
 		((*nextX == 95) && ( *nextY == 28)) ||
 		((*nextX == 78) && ( *nextY == 28)) ||
 		((*nextX == 61) && ( *nextY == 28)) ||
 		((*nextX == 44) && ( *nextY == 28)) ||
 		((*nextX == 27) && ( *nextY == 28))
 	){
-		drawnH(board, nextX, nextY, right, left);
+		drawnH(board, *nextX, *nextY, right, left);
 		*nextX = *nextX - 17;
 		return;
 	};
+
 	if(
 		((*nextX == 1) && ( *nextY == 1)) ||
 		((*nextX == 18) && ( *nextY == 1)) ||
@@ -575,38 +420,39 @@ void drawnPiece(char board[45][164], int *nextX, int *nextY, int left, int right
 		((*nextX == 52) && ( *nextY == 1)) ||
 		((*nextX == 69) && ( *nextY == 1)) ||
 		((*nextX == 86) && ( *nextY == 1)) ||
-		((*nextX == 103) && ( *nextY == 1)) ||
-		((*nextX == 120) && ( *nextY == 1)) ||
-		((*nextX == 137) && ( *nextY == 1)) ||
 		((*nextX == 1) && ( *nextY == 19)) ||
 		((*nextX == 18) && ( *nextY == 19)) ||
 		((*nextX == 52) && ( *nextY == 19)) ||
 		((*nextX == 35) && ( *nextY == 19)) ||
 		((*nextX == 69) && ( *nextY == 19)) ||
-		((*nextX == 86) && ( *nextY == 19)) ||
-		((*nextX == 103) && ( *nextY == 19)) ||
-		((*nextX == 120) && ( *nextY == 19)) ||
-		((*nextX == 137) && ( *nextY == 19))
+		((*nextX == 86) && ( *nextY == 19))
 	){
-		drawnH(board, nextX, nextY, left, right);
+		drawnH(board, *nextX, *nextY, left, right);
 		*nextX = *nextX + 17;
 		return;
 	};
 };
 
-void showTable(dominoParts *table, dominoParts *player){
-	printf("\e[H\e[2J");
-	char board[36][164];
+void drawnPlayerParts(char board[43][163], dominoParts *player){
+	int nextX = 35;
+	int nextY = 2;
+	dominoPiece *auxList = player->startPiece;
+	while(auxList->next != NULL){
+		drawnV(board, nextY, nextX, auxList->values[0], auxList->values[1]);
+		auxList = auxList->next;
+		nextY = nextY + 9;
+	};
+};
+
+void generateTable(char board[43][163]){
 	int i, j;
-	for(i = 0; i < 36; i++){
-		for(j = 0; j < 164; j++){
-			if((i == 0 && j == 0) || (i == 0 && j == 163) || (i == 35 && j == 0) || (i == 35 && j == 163)){
+	for(i = 0; i < 43; i++){
+		for(j = 0; j < 163; j++){
+			if((i == 0 && j == 0) || (i == 0 && j == 162) || (i == 42 && j == 0) || (i == 42 && j == 162)){
 				board[i][j] = '+';
-			}else if((i == 0 && j != 0 && j != 163) || (i == 35 && j != 0 && j != 163)){
+			}else if((i == 0 && j != 0 && j != 162) || (i == 42 && j != 0 && j != 162) || (i == 27 && j != 0 && j != 162)){
 				board[i][j] = '=';
-			}else if((i == 24 && j != 0 && j != 163)){
-				board[i][j] = '-';
-			}else if((j == 0 && i != 0 && i != 35) || (j == 163 && i != 0 && i != 35)){
+			}else if((j == 0 && i != 0 && i != 42) || (j == 162 && i != 0 && i != 42)){
 				board[i][j] = '|';
 			}else{
 				board[i][j] = ' ';
@@ -614,48 +460,193 @@ void showTable(dominoParts *table, dominoParts *player){
 		};
 	};
 	board[0][77] = ' ';
-	board[0][78] = 'D';
-	board[0][79] = 'O';
-	board[0][80] = 'M';
-	board[0][81] = 'I';
-	board[0][82] = 'N';
-	board[0][83] = 'O';
-	board[0][84] = ' ';
-	int nextX = 1;
-	int nextY = 1;
-	dominoPiece *auxPiece = table->startPiece;
-	while(auxPiece != NULL){
-		drawnPiece(board, &nextX, &nextY, auxPiece->values[0], auxPiece->values[1]);
-		auxPiece = auxPiece->next;
-	};
-	nextX = 1;
-	nextY = 26;
-	auxPiece = player->startPiece;
-	int counter = 1;
-	while(auxPiece != NULL){
-		drawnV(board, &nextX, &nextY, auxPiece->values[0], auxPiece->values[1]);
+	board[0][78] = 'T';
+	board[0][79] = 'A';
+	board[0][80] = 'B';
+	board[0][81] = 'U';
+	board[0][82] = 'L';
+	board[0][83] = 'E';
+	board[0][84] = 'I';
+	board[0][85] = 'R';
+	board[0][86] = '0';
+	board[0][87] = ' ';
 
-		if(counter == 1){board[nextY-1][nextX+4] = '1';};
-		if(counter == 2){board[nextY-1][nextX+4] = '2';};
-		if(counter == 3){board[nextY-1][nextX+4] = '3';};
-		if(counter == 4){board[nextY-1][nextX+4] = '4';};
-		if(counter == 5){board[nextY-1][nextX+4] = '5';};
-		if(counter == 6){board[nextY-1][nextX+4] = '6';};
-		if(counter == 7){board[nextY-1][nextX+4] = '7';};
-		if(counter == 8){board[nextY-1][nextX+4] = '8';};
-		if(counter == 9){board[nextY-1][nextX+4] = '9';};
-		if(counter == 10){board[nextY-1][nextX+4] = '1';board[nextY-1][nextX+5] = '0';};
-		if(counter == 11){board[nextY-1][nextX+4] = '1';board[nextY-1][nextX+5] = '1';};
+	board[29][2] = 'V';
+	board[29][3] = 'E';
+	board[29][4] = 'Z';
+	board[29][5] = ' ';
+	board[29][6] = 'D';
+	board[29][7] = 'E';
+	board[29][8] = ':';
+};
 
-
-		nextX = nextX + 8;
-		counter++;
-		auxPiece = auxPiece->next;
-	};
-	for(i = 0; i < 36; i++){
-		for(j = 0; j < 164; j++){
+void showTable(char board[43][163]){
+	printf("\e[H\e[2J");
+	int i, j;
+	for(i = 0; i < 43; i++){
+		for(j = 0; j < 163; j++){
 			printf("%c", board[i][j]);
 		};
 		printf("\n");
+	};
+};
+
+void drawnH(char board[43][163], int nextY, int nextX, int left, int right){
+	int i, j;
+	for(i = nextX; i < (nextX+5); i++){
+		for(j = nextY; j < (nextY+17); j++){
+			if((i == nextX && j != nextY && j != (nextY+16)) || (i == nextX+4 && j != nextY && j != (nextY+16))){
+				board[i][j] = '-';
+			};
+			if((j == nextY && i != nextX && i != (nextX+4)) || (j == nextY+16 && i != nextX && i != (nextX+4)) || (j == (nextY+8) && i != nextX && i != (nextX+4))){
+				board[i][j] = '|';
+			};
+		};
+	};
+	if(left == 1){
+		board[nextX+2][nextY+4] = '0';
+	};
+	if(left == 2){
+		board[nextX+1][nextY+4] = '0';
+		board[nextX+3][nextY+4] = '0';
+	};
+	if(left == 3){
+		board[nextX+1][nextY+2] = '0';
+		board[nextX+2][nextY+4] = '0';
+		board[nextX+3][nextY+6] = '0';
+	};
+	if(left == 4){
+		board[nextX+1][nextY+2] = '0';
+		board[nextX+1][nextY+6] = '0';
+		board[nextX+3][nextY+2] = '0';
+		board[nextX+3][nextY+6] = '0';
+	};
+	if(left == 5){
+		board[nextX+1][nextY+2] = '0';
+		board[nextX+1][nextY+6] = '0';
+		board[nextX+3][nextY+2] = '0';
+		board[nextX+3][nextY+6] = '0';
+		board[nextX+2][nextY+4] = '0';
+	};
+	if(left == 6){
+		board[nextX+1][nextY+2] = '0';
+		board[nextX+1][nextY+4] = '0';
+		board[nextX+1][nextY+6] = '0';
+		board[nextX+3][nextY+2] = '0';
+		board[nextX+3][nextY+4] = '0';
+		board[nextX+3][nextY+6] = '0';
+	};
+	if(right == 1){
+		board[nextX+2][nextY+12] = '0';
+	};
+	if(right == 2){
+		board[nextX+1][nextY+12] = '0';
+		board[nextX+3][nextY+12] = '0';
+	};
+	if(right == 3){
+		board[nextX+1][nextY+10] = '0';
+		board[nextX+2][nextY+12] = '0';
+		board[nextX+3][nextY+14] = '0';
+	};
+	if(right == 4){
+		board[nextX+1][nextY+10] = '0';
+		board[nextX+1][nextY+14] = '0';
+		board[nextX+3][nextY+10] = '0';
+		board[nextX+3][nextY+14] = '0';
+	};
+	if(right == 5){
+		board[nextX+1][nextY+10] = '0';
+		board[nextX+1][nextY+14] = '0';
+		board[nextX+3][nextY+10] = '0';
+		board[nextX+3][nextY+14] = '0';
+		board[nextX+2][nextY+12] = '0';
+	};
+	if(right == 6){
+		board[nextX+1][nextY+10] = '0';
+		board[nextX+1][nextY+12] = '0';
+		board[nextX+1][nextY+14] = '0';
+		board[nextX+3][nextY+10] = '0';
+		board[nextX+3][nextY+12] = '0';
+		board[nextX+3][nextY+14] = '0';
+	};
+};
+
+void drawnV(char board[43][163], int nextY, int nextX, int left, int right){
+	int i, j;
+	for(i = nextX; i < (nextX+9); i++){
+		for(j = nextY; j < (nextY+9); j++){
+			if((i == nextX && j != nextY && j != (nextY+8)) || (i == nextX+4 && j != nextY && j != (nextY+8)) || (i == nextX+8 && j != nextY && j != (nextY+8))){
+				board[i][j] = '-';
+			};
+			if((j == nextY && i != nextX && i != (nextX+8)) || (j == nextY+8 && i != nextX && i != (nextX+8))){
+				board[i][j] = '|';
+			};
+		};
+	};
+	if(left == 1){
+		board[nextX+2][nextY+4] = '0';
+	};
+	if(left == 2){
+		board[nextX+2][nextY+2] = '0';
+		board[nextX+2][nextY+6] = '0';
+	};
+	if(left == 3){
+		board[nextX+3][nextY+2] = '0';
+		board[nextX+2][nextY+4] = '0';
+		board[nextX+1][nextY+6] = '0';
+	};
+	if(left == 4){
+		board[nextX+3][nextY+2] = '0';
+		board[nextX+1][nextY+6] = '0';
+		board[nextX+1][nextY+2] = '0';
+		board[nextX+3][nextY+6] = '0';
+	};
+	if(left == 5){
+		board[nextX+3][nextY+2] = '0';
+		board[nextX+1][nextY+6] = '0';
+		board[nextX+1][nextY+2] = '0';
+		board[nextX+3][nextY+6] = '0';
+		board[nextX+2][nextY+4] = '0';
+	};
+	if(left == 6){
+		board[nextX+3][nextY+2] = '0';
+		board[nextX+1][nextY+6] = '0';
+		board[nextX+1][nextY+2] = '0';
+		board[nextX+3][nextY+6] = '0';
+		board[nextX+2][nextY+2] = '0';
+		board[nextX+2][nextY+6] = '0';
+	};
+	if(right == 1){
+		board[nextX+6][nextY+4] = '0';
+	};
+	if(right == 2){
+		board[nextX+6][nextY+2] = '0';
+		board[nextX+6][nextY+6] = '0';
+	};
+	if(right == 3){
+		board[nextX+7][nextY+2] = '0';
+		board[nextX+6][nextY+4] = '0';
+		board[nextX+5][nextY+6] = '0';
+	};
+	if(right == 4){
+		board[nextX+7][nextY+2] = '0';
+		board[nextX+5][nextY+6] = '0';
+		board[nextX+5][nextY+2] = '0';
+		board[nextX+7][nextY+6] = '0';
+	};
+	if(right == 5){
+		board[nextX+7][nextY+2] = '0';
+		board[nextX+5][nextY+6] = '0';
+		board[nextX+5][nextY+2] = '0';
+		board[nextX+7][nextY+6] = '0';
+		board[nextX+6][nextY+4] = '0';
+	};
+	if(right == 6){
+		board[nextX+7][nextY+2] = '0';
+		board[nextX+5][nextY+6] = '0';
+		board[nextX+5][nextY+2] = '0';
+		board[nextX+7][nextY+6] = '0';
+		board[nextX+6][nextY+2] = '0';
+		board[nextX+6][nextY+6] = '0';
 	};
 };

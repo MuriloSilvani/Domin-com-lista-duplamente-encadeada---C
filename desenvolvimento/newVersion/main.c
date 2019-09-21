@@ -6,10 +6,14 @@
 
 int main(){
 	system("title Domino - Estrura de Dados");
-	system("MODE con cols=164 lines=60");
+	system("MODE con cols=164 lines=50");
+
+	char board[43][163];
+	generateTable(board);
+
 	int whileGame = 0;
+
 	while(whileGame != 2){
-		whileGame = 0;
 		printf("\e[H\e[2J");
 		int players = 0;
 		char name1[50], name2[50], auxName[6];
@@ -66,18 +70,18 @@ int main(){
 		int gameStatus = 0;
 		while(gameStatus != 1){
 			if(gameStatus != 1){
-				gameStatus = play(player1, table, allParts);
+				gameStatus = play(player1, table, allParts, board);
 			};
+			printf("saiu montar tabela\n");getchar();
 			if(gameStatus != 1){
-				gameStatus = play(player2, table, allParts);
+				gameStatus = play(player2, table, allParts, board);
 			};
-			gameStatus = verifyWinner(player1, player2, table, allParts);
+			gameStatus = verifyWinner(player1, player2, table, allParts, board);
 		};
 
 
-		showTable(table, player1);
 
-		verifyWinner(player1, player2, table, allParts);
+		verifyWinner(player1, player2, table, allParts, board);
 		printf("\n\n\n");
 
 		while(whileGame < 1 || whileGame > 2){
