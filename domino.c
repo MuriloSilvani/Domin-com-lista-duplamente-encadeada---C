@@ -166,6 +166,7 @@ int play(char board[39][164], dominoParts *player, dominoParts *table, dominoPar
 				int i;
 				for(i = 0; i < sizeof(menu0); i++){board[26][i+1] = menu0[i];};
 				showTable(board);
+				printf("----- Vez de %s\n -->\t:", player->name);
 				getchar();
 			};
 			if(verifyParts(player, table) == 1){
@@ -189,6 +190,7 @@ int play(char board[39][164], dominoParts *player, dominoParts *table, dominoPar
 					char menu0[] = "Passou a vez, ja pescou e nao tem pecas. Pressione qualquer tecla para continuar...";
 					for(i = 0; i < sizeof(menu0); i++){board[26][i+1] = menu0[i];};
 					showTable(board);
+					printf("----- Vez de %s\n -->\t:", player->name);
 					getchar();
 				}else{
 					showTable(board);
