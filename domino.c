@@ -153,7 +153,7 @@ int play(char board[39][164], dominoParts *player, dominoParts *table, dominoPar
 				strcat(menu0, aux);
 				for(i = 0; i < sizeof(menu0); i++){board[26][i+1] = menu0[i];};
 				showTable(board);
-
+				printf("----- Vez de %s\n -->\t:", player->name);
 				scanf("%i%*c", &playChoose);
 			}else{
 				showTable(board);
@@ -166,6 +166,7 @@ int play(char board[39][164], dominoParts *player, dominoParts *table, dominoPar
 				int i;
 				for(i = 0; i < sizeof(menu0); i++){board[26][i+1] = menu0[i];};
 				showTable(board);
+				getchar();
 			};
 			if(verifyParts(player, table) == 1){
 				if(player->type == 1){
@@ -176,6 +177,7 @@ int play(char board[39][164], dominoParts *player, dominoParts *table, dominoPar
 					strcat(menu0, aux);
 					for(i = 0; i < sizeof(menu0); i++){board[26][i+1] = menu0[i];};
 					showTable(board);
+					printf("----- Vez de %s\n -->\t:", player->name);
 					scanf("%i%*c", &playChoose);
 				}else{
 					showTable(board);

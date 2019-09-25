@@ -6,7 +6,7 @@
 
 int main(){
 	system("title Domino - Estrura de Dados");
-	system("MODE con cols=164 lines=45");
+	system("MODE con cols=164 lines=47");
 	int whileGame = 0;
 	while(whileGame != 2){
 		whileGame = 0;
