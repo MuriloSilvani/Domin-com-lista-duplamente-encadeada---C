@@ -162,7 +162,7 @@ int play(char board[39][164], dominoParts *player, dominoParts *table, dominoPar
 		}else{
 			giveRandomPiece(allParts, player);
 			if(player->type == 1){
-				char menu0[] = "Pescando peca...";
+				char menu0[] = "Pescando peca. Pressione qualquer tecla para continuar...";
 				int i;
 				for(i = 0; i < sizeof(menu0); i++){board[26][i+1] = menu0[i];};
 				showTable(board);
