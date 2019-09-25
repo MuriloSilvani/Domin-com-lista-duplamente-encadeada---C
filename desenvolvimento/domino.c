@@ -138,34 +138,58 @@ void insertPieceStart(dominoParts *parts, int left, int right){
     parts->total += 1;
 };
 
-int play(dominoParts *player, dominoParts *table, dominoParts *allParts){
+int play(char board[39][164], dominoParts *player, dominoParts *table, dominoParts *allParts){
 	int playChoose = 0;
 	while((playChoose < 1 || playChoose > player->total)){
-		printf("\e[H\e[2J");
-		showTable(table, player);
-		showParts(player);
+		drawnTable(board, table);
+		drawnPlayerParts(player, board);
 
 		if(verifyParts(player, table) == 1){
 			if(player->type == 1){
-				printf("Escolha uma peca [de 1 a %i]  ", player->total);
+				int i;
+				char aux[2];
+				sprintf(aux, "%i", player->total);
+				char menu0[] = "Escolha uma peca de 1 a ";
+				strcat(menu0, aux);
+				for(i = 0; i < sizeof(menu0); i++){board[26][i+1] = menu0[i];};
+				showTable(board);
+
 				scanf("%i%*c", &playChoose);
 			}else{
+				showTable(board);
 				playAuto(player, table, &playChoose);
 			};
 		}else{
-			printf("Pescando peca...\n");
 			giveRandomPiece(allParts, player);
+			if(player->type == 1){
+				char menu0[] = "Pescando peca...";
+				int i;
+				for(i = 0; i < sizeof(menu0); i++){board[26][i+1] = menu0[i];};
+				showTable(board);
+			};
 			if(verifyParts(player, table) == 1){
 				if(player->type == 1){
-					printf("Escolha uma peca [de 1 a %i]  ", player->total);
+					int i;
+					char aux[2];
+					sprintf(aux, "%i", player->total);
+					char menu0[] = "Escolha uma peca de 1 a ";
+					strcat(menu0, aux);
+					for(i = 0; i < sizeof(menu0); i++){board[26][i+1] = menu0[i];};
+					showTable(board);
 					scanf("%i%*c", &playChoose);
 				}else{
+					showTable(board);
 					playAuto(player, table, &playChoose);
 				};
 			}else{
 				if(player->type == 1){
-					printf("Passou a vez, ja pescou e nao tem pecas. Pressione qualquer tecla para continuar...\n");
+					int i;
+					char menu0[] = "Passou a vez, ja pescou e nao tem pecas. Pressione qualquer tecla para continuar...";
+					for(i = 0; i < sizeof(menu0); i++){board[26][i+1] = menu0[i];};
+					showTable(board);
 					getchar();
+				}else{
+					showTable(board);
 				};
 				return 0;
 			};
@@ -174,7 +198,10 @@ int play(dominoParts *player, dominoParts *table, dominoParts *allParts){
 		if(verifyPiece(player, table, playChoose) == 1){
 			playPiece(player, table, playChoose);
 		}else{
-			printf("Peca Invalidade, tente outra...\n");
+			int i;
+			char menu0[] = "Peca Invalidade, tente outra...";
+			for(i = 0; i < sizeof(menu0); i++){board[26][i+1] = menu0[i];};
+			showTable(board);
 			playChoose = 0;
 		};
 
@@ -354,7 +381,7 @@ int verifyWinner(dominoParts *player1, dominoParts *player2, dominoParts *table,
 	return 0;
 };
 
-void drawnH(char board[45][164], int *nextY, int *nextX, int left, int right){
+void drawnH(char board[39][164], int *nextY, int *nextX, int left, int right){
 	int i, j;
 	for(i = *nextX; i < (*nextX+5); i++){
 		for(j = *nextY; j < (*nextY+17); j++){
@@ -434,7 +461,7 @@ void drawnH(char board[45][164], int *nextY, int *nextX, int left, int right){
 	};
 };
 
-void drawnV(char board[45][164], int *nextY, int *nextX, int left, int right){
+void drawnV(char board[39][164], int *nextY, int *nextX, int left, int right){
 	int i, j;
 	for(i = *nextX; i < (*nextX+9); i++){
 		for(j = *nextY; j < (*nextY+9); j++){
@@ -514,7 +541,7 @@ void drawnV(char board[45][164], int *nextY, int *nextX, int left, int right){
 	};
 };
 
-void drawnPiece(char board[45][164], int *nextX, int *nextY, int left, int right){
+void drawnPiece(char board[39][164], int *nextX, int *nextY, int left, int right){
 	if(
 		((*nextX == 1) && ( *nextY == 10)) ||
 		((*nextX == 1) && ( *nextY == 28))
@@ -542,7 +569,7 @@ void drawnPiece(char board[45][164], int *nextX, int *nextY, int left, int right
 	if(
 		((*nextX == 10) && ( *nextY == 10))
 	){
-		drawnH(board, nextX, nextY, left, right);
+		drawnH(board, nextX, nextY, right, left);
 		*nextX = *nextX - 9;
 		return;
 	};
@@ -594,19 +621,17 @@ void drawnPiece(char board[45][164], int *nextX, int *nextY, int left, int right
 	};
 };
 
-void showTable(dominoParts *table, dominoParts *player){
-	printf("\e[H\e[2J");
-	char board[36][164];
+void startTable(char board[39][164]){
 	int i, j;
-	for(i = 0; i < 36; i++){
+	for(i = 0; i < 39; i++){
 		for(j = 0; j < 164; j++){
-			if((i == 0 && j == 0) || (i == 0 && j == 163) || (i == 35 && j == 0) || (i == 35 && j == 163)){
+			if((i == 0 && j == 0) || (i == 0 && j == 163) || (i == 38 && j == 0) || (i == 38 && j == 163)){
 				board[i][j] = '+';
-			}else if((i == 0 && j != 0 && j != 163) || (i == 35 && j != 0 && j != 163)){
+			}else if((i == 0 && j != 0 && j != 163) || (i == 38 && j != 0 && j != 163)){
 				board[i][j] = '=';
 			}else if((i == 24 && j != 0 && j != 163)){
 				board[i][j] = '-';
-			}else if((j == 0 && i != 0 && i != 35) || (j == 163 && i != 0 && i != 35)){
+			}else if((j == 0 && i != 0 && i != 38) || (j == 163 && i != 0 && i != 38)){
 				board[i][j] = '|';
 			}else{
 				board[i][j] = ' ';
@@ -621,6 +646,28 @@ void showTable(dominoParts *table, dominoParts *player){
 	board[0][82] = 'N';
 	board[0][83] = 'O';
 	board[0][84] = ' ';
+};
+
+void clearTopTable(char board[39][164]){
+	int i, j;
+	for(i = 1; i < 24; i++){
+		for(j = 1; j < 163; j++){
+			board[i][j] = ' ';
+		};
+	};
+};
+
+void clearBottomTable(char board[39][164]){
+	int i, j;
+	for(i = 25; i < 38; i++){
+		for(j = 1; j < 163; j++){
+			board[i][j] = ' ';
+		};
+	};
+};
+
+void drawnTable(char board[39][164], dominoParts *table){
+	clearTopTable(board);
 	int nextX = 1;
 	int nextY = 1;
 	dominoPiece *auxPiece = table->startPiece;
@@ -628,9 +675,26 @@ void showTable(dominoParts *table, dominoParts *player){
 		drawnPiece(board, &nextX, &nextY, auxPiece->values[0], auxPiece->values[1]);
 		auxPiece = auxPiece->next;
 	};
-	nextX = 1;
-	nextY = 26;
-	auxPiece = player->startPiece;
+};
+
+void showTable(char board[39][164]){
+	printf("\e[H\e[2J");
+	int i, j;
+	for(i = 0; i < 39; i++){
+		for(j = 0; j < 164; j++){
+			printf("%c", board[i][j]);
+		};
+		printf("\n");
+	};
+};
+
+void drawnPlayerParts(dominoParts *player, char board[39][164]){
+
+	clearBottomTable(board);
+
+	int nextX = 1;
+	int nextY = 29;
+	dominoPiece *auxPiece = player->startPiece;
 	int counter = 1;
 	while(auxPiece != NULL){
 		drawnV(board, &nextX, &nextY, auxPiece->values[0], auxPiece->values[1]);
@@ -646,16 +710,40 @@ void showTable(dominoParts *table, dominoParts *player){
 		if(counter == 9){board[nextY-1][nextX+4] = '9';};
 		if(counter == 10){board[nextY-1][nextX+4] = '1';board[nextY-1][nextX+5] = '0';};
 		if(counter == 11){board[nextY-1][nextX+4] = '1';board[nextY-1][nextX+5] = '1';};
+		if(counter == 12){board[nextY-1][nextX+4] = '1';board[nextY-1][nextX+5] = '2';};
+		if(counter == 13){board[nextY-1][nextX+4] = '1';board[nextY-1][nextX+5] = '3';};
+		if(counter == 14){board[nextY-1][nextX+4] = '1';board[nextY-1][nextX+5] = '4';};
+		if(counter == 15){board[nextY-1][nextX+4] = '1';board[nextY-1][nextX+5] = '5';};
+		if(counter == 16){board[nextY-1][nextX+4] = '1';board[nextY-1][nextX+5] = '6';};
+		if(counter == 17){board[nextY-1][nextX+4] = '1';board[nextY-1][nextX+5] = '7';};
+		if(counter == 18){board[nextY-1][nextX+4] = '1';board[nextY-1][nextX+5] = '8';};
 
-
-		nextX = nextX + 8;
+		nextX = nextX + 9;
 		counter++;
 		auxPiece = auxPiece->next;
 	};
-	for(i = 0; i < 36; i++){
-		for(j = 0; j < 164; j++){
-			printf("%c", board[i][j]);
-		};
-		printf("\n");
-	};
+};
+
+void startOptions(char board[39][164]){
+	clearBottomTable(board);
+	char menu0[] = "--------- Modo de Jogo ---------";
+	char menu1[] = " ->  1 :   Um jogador";
+	char menu2[] = " ->  2 :   Dois jogadores";
+	char menu3[] = " ->  3 :   Jogadores Autonomos";
+	int i;
+	for(i = 0; i < sizeof(menu0); i++){board[25][i+1] = menu0[i];};
+	for(i = 0; i < sizeof(menu1); i++){board[27][i+1] = menu1[i];};
+	for(i = 0; i < sizeof(menu2); i++){board[28][i+1] = menu2[i];};
+	for(i = 0; i < sizeof(menu3); i++){board[29][i+1] = menu3[i];};
+};
+
+void endOptions(char board[39][164]){
+	clearBottomTable(board);
+	char menu0[] = "--------- Fim de Jogo ---------";
+	char menu1[] = " ->  1 :   Jogar Novamente";
+	char menu2[] = " ->  2 :   Sair do Jogo";
+	int i;
+	for(i = 0; i < sizeof(menu0); i++){board[25][i+1] = menu0[i];};
+	for(i = 0; i < sizeof(menu1); i++){board[27][i+1] = menu1[i];};
+	for(i = 0; i < sizeof(menu2); i++){board[28][i+1] = menu2[i];};
 };

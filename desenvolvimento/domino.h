@@ -25,14 +25,23 @@ void searchFirstLast(dominoParts *table, int *first, int *last);
 int verifyPiece(dominoParts *player, dominoParts *table, int playChoose);
 int verifyParts(dominoParts *player, dominoParts *table);
 void playAuto(dominoParts *player, dominoParts *table, int *playChoose);
-int play(dominoParts *player, dominoParts *table, dominoParts *allParts);
+int play(char board[39][164], dominoParts *player, dominoParts *table, dominoParts *allParts);
 void playPiece(dominoParts *player, dominoParts *table, int playChoose);
 int verifyWinner(dominoParts *player1, dominoParts *player2, dominoParts *table, dominoParts *allParts);
 
-void drawnV(char board[45][164], int *nextY, int *nextX, int left, int right);
-void drawnH(char board[45][164], int *nextY, int *nextX, int left, int right);
-void drawnPiece(char board[45][164], int *nextX, int *nextY, int left, int right);
-void showTable(dominoParts *table, dominoParts *player);
+void drawnTable(char board[39][164], dominoParts *table);
+void showTable(char board[39][164]);
+void startTable(char board[39][164]);
+void drawnV(char board[39][164], int *nextY, int *nextX, int left, int right);
+void drawnH(char board[39][164], int *nextY, int *nextX, int left, int right);
+void drawnPiece(char board[39][164], int *nextX, int *nextY, int left, int right);
+void showTable(char board[39][164]);
+void drawnPlayerParts(dominoParts *player, char board[39][164]);
+void clearTopTable(char board[39][164]);
+void clearBottomTable(char board[39][164]);
 
+
+void startOptions(char board[39][164]);
+void endOptions(char board[39][164]);
 
 #endif
